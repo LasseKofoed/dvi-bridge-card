@@ -79,7 +79,7 @@ class DviBridgeCard extends HTMLElement {
     this._addLabel(container, "sensor.dvi_lv12_storage_tank_cv", "69.2%", "56%");
 
     // --- Info icon popup ---
-    this._addBrowserModPopupIcon(
+    this._addPopupIcon(
       container,
       "mdi:information-slab-circle",
       "-2%", "90%",
@@ -93,7 +93,7 @@ class DviBridgeCard extends HTMLElement {
     );
 
     // --- Radiator popup ---
-    this._addBrowserModPopupIcon(
+    this._addPopupIcon(
       container,
       "mdi:radiator",
       "8%", "90%",
@@ -107,7 +107,7 @@ class DviBridgeCard extends HTMLElement {
     );
 
     // --- Shower popup ---
-    this._addBrowserModPopupIcon(
+    this._addPopupIcon(
       container,
       "mdi:shower-head",
       "18%", "90%",
@@ -194,33 +194,26 @@ class DviBridgeCard extends HTMLElement {
     container.appendChild(el);
   }
 
-  _addBrowserModPopupIcon(container, icon, top, left, title, entities) {
-    const el = document.createElement("ha-icon");
-    el.className = "overlay";
-    el.icon = icon;
-    Object.assign(el.style, { position: "absolute", top, left, cursor: "pointer" });
+  _addPopupIcon(container, icon, top, left, title, entities) {
+      const el = document.createElement("ha-icon");
+      el.className = "overlay";
+      el.icon = icon;
+      Object.assign(el.style, { position: "absolute", top, left, cursor: "pointer" });
 
-    el.addEventListener("click", () => {
-      const ev = new CustomEvent("fire-dom-event", {
-        detail: {
-          action: "call-service",
-          service: "browser_mod.popup",
-          service_data: {
-            title: title,
-            content: {
-              type: "entities",
-              entities: entities.map(e => ({ entity: e }))
-            }
+      el.addEventListener("click", () => {
+        if (!this._hass) return;
+        this._hass.callService("browser_mod", "popup", {
+          title,
+          content: {
+            type: "entities",
+            entities: entities.map(e => ({ entity: e }))
           }
-        },
-        bubbles: true,
-        composed: true
+        });
       });
-      document.querySelector("home-assistant").dispatchEvent(ev);
-    });
 
-    container.appendChild(el);
-  }
+      container.appendChild(el);
+    }
+
 
   getCardSize() {
     return 5;
