@@ -10,7 +10,7 @@ class DviBridgeCard extends HTMLElement {
 
   connectedCallback() {
     this.innerHTML = `
-      <ha-card header="DVI LV12 Compact varmepumpe">
+      <ha-card header="DVI LV Compact varmepumpe">
         <div id="container" style="position:relative;">
           <img src="/hacsfiles/dvi-bridge-card/images/dvi.gif?v=2" style="width:100%;" />
         </div>
