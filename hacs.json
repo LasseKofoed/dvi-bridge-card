@@ -1,6 +1,5 @@
 {
   "name": "DVI Bridge Card",
   "filename": "dvi-bridge-card",
-  "content_in_root": false,
   "render_readme": true
 }
