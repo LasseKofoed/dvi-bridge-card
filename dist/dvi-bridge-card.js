@@ -226,4 +226,14 @@ class DviBridgeCard extends HTMLElement {
   }
 }
 
-customElements.define("dvi-bridge-card", DviBridgeCard);
+ // Register card in the Lovelace card picker
+ window.customCards = window.customCards || [];
+ window.customCards.push({
+   type: "dvi-bridge-card",
+   name: "DVI LV Compact Heatpump Card",
+   description: "Visual overview and control panel for a DVI LV compact heatpump.",
+   preview: true,                 // gør at det dukker op under "Custom cards"
+   documentationURL: "https://github.com/ruteclrp/dvi-bridge-card"
+ });
+
+ customElements.define("dvi-bridge-card", DviBridgeCard);
